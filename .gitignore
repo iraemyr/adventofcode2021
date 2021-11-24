@@ -39,3 +39,6 @@ bin/
 
 # Ignore Vscode specific files
 .vscode
+
+# Ignore adventofcode session file
+cookie.txt
