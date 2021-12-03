@@ -37,48 +37,41 @@ public class Day03 {
     }
 
     public static int part2(String[] lines) {
-        int zeros = 0;
-        int ones = 0;
         List<String> oxyCodes = new ArrayList<>();
         List<String> carbonCodes = new ArrayList<>();
         
         for (String line : lines) {
             oxyCodes.add(line);
             carbonCodes.add(line);
-        }
-        
+        }        
+
+        int oxy = Integer.parseInt(findCode(true, oxyCodes), 2);
+        int carbon = Integer.parseInt(findCode(false, carbonCodes), 2);
+        return oxy * carbon;
+    }
+    
+    private static String findCode(boolean oxygen, List<String> codes) {
         int place = 0;
-        while(oxyCodes.size() != 1) {
+        int zeros;
+        int ones;
+        while (codes.size() != 1) {
             zeros = 0;
             ones = 0;
-            for (String code : oxyCodes) {
-                if (code.charAt(place) == '0') zeros++;
+            for (String s : codes) {
+                if (s.charAt(place) == '0') zeros++;
                 else ones++;
             }
             
             if (zeros > ones) {
-                evalBit(0, place, oxyCodes);
-            } else evalBit(1, place, oxyCodes);
-            place++;
-        }
-        
-        place = 0;
-        while (carbonCodes.size() != 1) {
-            zeros = 0;
-            ones = 0;
-            for (String code : carbonCodes) {
-                if (code.charAt(place) == '0') zeros++;
-                else ones++;
+                if (oxygen) evalBit(0, place, codes);
+                else evalBit(1, place, codes);
+            } else  {
+                if (oxygen) evalBit(1, place, codes);
+                else evalBit(0, place, codes);
             }
-            
-            if (zeros > ones) evalBit(1, place, carbonCodes);
-            else evalBit(0, place, carbonCodes);
             place++;
         }
-
-        int oxy = Integer.parseInt(oxyCodes.get(0), 2);
-        int carbon = Integer.parseInt(carbonCodes.get(0), 2);
-        return oxy * carbon;
+        return codes.get(0);
     }
     
     private static void evalBit(int val, int place, List<String> codes) {
