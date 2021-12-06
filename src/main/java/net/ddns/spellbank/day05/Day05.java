@@ -79,6 +79,7 @@ public class Day05 {
         grid[posY][posX]++;
     }
     
+    @SuppressWarnings("unused")
     private static void printGrid(int[][] grid) {
         for (int[] row : grid) {
             for (int i : row) System.out.print(i + " ");
