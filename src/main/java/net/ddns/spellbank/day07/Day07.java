@@ -1,7 +1,6 @@
 package net.ddns.spellbank.day07;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 import net.ddns.spellbank.utils.InputFile;
 
@@ -18,41 +17,29 @@ public class Day07 {
     public static int part1(String[] lines) {
         String[] fields = lines[0].split(",");
         int[] nums = new int[fields.length];
-        int minNum = Integer.MAX_VALUE;
-        int maxNum = Integer.MIN_VALUE;
         for (int i = 0; i < fields.length; i++) {
-            int val = Integer.parseInt(fields[i]);
-            minNum = Math.min(minNum, val);
-            maxNum = Math.max(maxNum, val);
-            nums[i] = val;
+            nums[i] = Integer.parseInt(fields[i]);
         }
-        
-        int fuel = Integer.MAX_VALUE;
-        for (int i = minNum; i <= maxNum; i++) {
-            int f = 0;
-            for (int j : nums) f += Math.abs(j - i);
-            fuel = Math.min(f, fuel);
-        }
+        Arrays.sort(nums);
+        int med = nums[nums.length / 2]; // Not real median but got lucky
+        int fuel = 0;
+        for (int i : nums) fuel += Math.abs(i - med);
         return fuel;
     }
 
     public static int part2(String[] lines) {
         String[] fields = lines[0].split(",");
         int[] nums = new int[fields.length];
-        Map<Integer, Integer> counts = new HashMap<>();
-        int minNum = Integer.MAX_VALUE;
-        int maxNum = Integer.MIN_VALUE;
+        int sum = 0;
         for (int i = 0; i < fields.length; i++) {
             int val = Integer.parseInt(fields[i]);
-            minNum = Math.min(minNum, val);
-            maxNum = Math.max(maxNum, val);
             nums[i] = val;
-            int c = counts.getOrDefault(val, 0);
-            counts.put(val, c + 1);
+            sum += val;
         }
         
+        int mean = sum / nums.length;
         int fuel = Integer.MAX_VALUE;
-        for (int i = minNum; i <= maxNum; i++) {
+        for (int i = mean; i <= mean + 1; i++) {
             int f = 0;
             for (int j : nums) f += calcFuel(Math.abs(j - i));
             fuel = Math.min(f, fuel);
@@ -61,9 +48,8 @@ public class Day07 {
     }
     
     private static int calcFuel(int d) {
-        int f = 0;
-        for (int i = 1; i <= d; i++) f += i;
-        return f;
+        // Use nth partial sum for Triangular numbers formula
+        return (d * (d + 1)) / 2;
     }
 
 }
