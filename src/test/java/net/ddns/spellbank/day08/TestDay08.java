@@ -11,12 +11,12 @@ class TestDay08 {
     @Test
     void part1() {
         String[] lines = InputFile.getLines("day08/input1");
-        assertEquals(0, Day08.part1(lines));
+        assertEquals(488, Day08.part1(lines));
     }
 
     @Test
     void part2() {
         String[] lines = InputFile.getLines("day08/input1");
-        assertEquals(0, Day08.part2(lines));
+        assertEquals(1040429, Day08.part2(lines));
     }
 }
