@@ -62,19 +62,8 @@ public class Day10 {
     private static long completeChunks(String line) {
         Deque<Character> stack = new ArrayDeque<>();
         for (char c : line.toCharArray()) {
-            if (c == ')') {
-                if (stack.isEmpty() || stack.peek() != '(') return -1;
-                stack.pop();
-            }
-            else if (c == ']') {
-                if (stack.isEmpty() || stack.peek() != '[') return -1;
-                stack.pop();
-            } else if (c == '}') {
-                if (stack.isEmpty() || stack.peek() != '{') return -1;
-                stack.pop();
-            }
-            else if (c == '>') {
-                if (stack.isEmpty() || stack.peek() != '<') return -1;
+            if (isClosing(c)) {
+                if (stack.isEmpty() || stack.peek() != getMatch(c)) return -1;
                 stack.pop();
             } else stack.push(c);
         }
@@ -102,6 +91,26 @@ public class Day10 {
             }
         }
         return score;
+    }
+    
+    private static boolean isClosing(char c) {
+        if (c == ')' || c == ']' || c == '}' || c == '>') return true;
+        return false;
+    }
+    
+    private static Character getMatch(char c) {
+        switch (c) {
+        case ')' :
+            return '(';
+        case ']' :
+            return '[';
+        case '}' :
+            return '{';
+        case '>' :
+            return '<';    
+        default :
+            return null;
+        }
     }
 
 }
