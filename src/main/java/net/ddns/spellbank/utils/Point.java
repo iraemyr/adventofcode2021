@@ -16,6 +16,11 @@ public class Point {
 	}
 	
 	public String toString() {
-		return "x=" + x + "y=" + y;
+		return x + ":" + y;
+	}
+	
+	public static Point getPoint(String s) {
+	    String[] fields = s.split(":");
+	    return new Point(Integer.parseInt(fields[0]), Integer.parseInt(fields[1]));
 	}
 }

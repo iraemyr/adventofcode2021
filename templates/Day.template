@@ -12,11 +12,11 @@ public class Day${day} {
         System.out.println(part2(lines));
     }
 
-    public static int part1(String[] lines) {
+    public static long part1(String[] lines) {
         return 0;
     }
 
-    public static int part2(String[] lines) {
+    public static long part2(String[] lines) {
         return 0;
     }
 
