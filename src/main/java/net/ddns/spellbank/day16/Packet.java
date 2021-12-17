@@ -3,33 +3,33 @@ package net.ddns.spellbank.day16;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Op {
+public class Packet {
+    int version;
     int type;
     Long val;
-    List<Op> children;
+    List<Packet> children;
     
-    public Op() {
+    public Packet() {
         val = null;
         children = new ArrayList<>();
     }
     
-    public Op(long v) {
-        val = v;
-    }
-    
-    public void setType(int t) {
-        type = t;
+    public Packet(int version, int type) {
+        this.version = version;
+        this.type = type;
+        val = null;
+        children = new ArrayList<>();
     }
     
     public void setVal(long v) {
         val = v;
     }
     
-    public void addChild(Op c) {
+    public void addChild(Packet c) {
         children.add(c);
     }
     
-    public void addChildren(List<Op> ch) {
+    public void addChildren(List<Packet> ch) {
         children.addAll(ch);
     }
     
@@ -52,7 +52,7 @@ public class Op {
     
     private long add() {
         long sum = 0;
-        for (Op o : children) sum += o.getVal();
+        for (Packet o : children) sum += o.getVal();
         //System.out.print("+");
         //for (Op o : children) System.out.print(" " + o.getVal());
         //System.out.println();
@@ -62,7 +62,7 @@ public class Op {
     
     private long product() {
         long prod = 1;
-        for (Op o : children) prod *= o.getVal();
+        for (Packet o : children) prod *= o.getVal();
         //System.out.print("*");
         //for (Op o : children) System.out.print(" " + o.getVal());
         //System.out.println();
@@ -72,7 +72,7 @@ public class Op {
     
     private long min() {
         long min = Long.MAX_VALUE;
-        for (Op o : children) min = Math.min(min, o.getVal());
+        for (Packet o : children) min = Math.min(min, o.getVal());
         //System.out.print("min");
         //for (Op o : children) System.out.print(" " + o.getVal());
         //System.out.println();
@@ -82,10 +82,10 @@ public class Op {
     
     private long max() {
         long max = Long.MIN_VALUE;
-        for (Op o : children) max = Math.max(max, o.getVal());
+        for (Packet o : children) max = Math.max(max, o.getVal());
         /*System.out.print("max ");
         for (Op o : children) {
-            if (o.getVal() == null) System.out.print(" Uhoh");
+            if (o.getVal() == null) System.out.print(" Error");
             else System.out.print(" " + o.getVal());
         }*/
         //System.out.println();
@@ -113,14 +113,17 @@ public class Op {
     
     private long equal() {
         if (children.size() != 2) System.out.println("Error");
-        //return children.get(0).getVal() == children.get(1).getVal() ? 1 : 0;
-        long v1 = children.get(0).getVal();
-        long v2 = children.get(1).getVal();
-        long v = v1 == v2 ? 1L : 0L;
-        //long v = children.get(0).getVal() == children.get(1).getVal() ? 1L : 0L;
+        return children.get(0).getVal().equals(children.get(1).getVal()) ? 1L : 0L;
+        //long v = children.get(0).getVal().equals(children.get(1).getVal()) ? 1L : 0L;
         //System.out.println(children.get(0).getVal() + " = " + children.get(1).getVal());
         //System.out.println(v);
-        return v;
+        //return v;
+    }
+    
+    public int versionSum() {
+        int sum = version;
+        for (Packet p : children) sum += p.versionSum();
+        return sum;
     }
 
 }
