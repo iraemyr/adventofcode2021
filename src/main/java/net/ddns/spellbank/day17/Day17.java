@@ -1,19 +1,14 @@
 package net.ddns.spellbank.day17;
 
-import net.ddns.spellbank.utils.InputFile;
-
 public class Day17 {
 
     public static void main(String[] args) {
-        String file = "day17/input1";
-        String[] lines = InputFile.getLines(file);
-
-        System.out.println(part1(lines)); // 35511
-        System.out.println(part2(lines)); // 3282
+        System.out.println(part1(14, 50, -267, -225)); // 35511
+        System.out.println(part2(14, 50, -267, -225)); // 3282
     }
 
-    public static long part1(String[] lines) {
-        Projectile.setBounds(14, 50, -267, -225);
+    public static long part1(int x1, int x2, int y1, int y2) {
+        Projectile.setBounds(x1, x2, y1, y2);
         int maxHeight = Integer.MIN_VALUE;
         for (int x = 4; x < 52; x++) {
             for (int y = -268; y < 300; y++) {
@@ -29,8 +24,8 @@ public class Day17 {
         return maxHeight;
     }
 
-    public static long part2(String[] lines) {
-        Projectile.setBounds(14, 50, -267, -225);
+    public static long part2(int x1, int x2, int y1, int y2) {
+        Projectile.setBounds(x1, x2, y1, y2);
         int count = 0;
         for (int x = 4; x < 52; x++) {
             for (int y = -268; y < 300; y++) {

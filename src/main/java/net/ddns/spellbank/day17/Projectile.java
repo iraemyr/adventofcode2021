@@ -6,10 +6,10 @@ public class Projectile {
     int xPos = 0;
     int yPos = 0;
     public int maxHeight = Integer.MIN_VALUE;
-    static int xMin;
-    static int xMax;
-    static int yMin;
-    static int yMax;
+    static private int xMin;
+    static private int xMax;
+    static private int yMin;
+    static private int yMax;
     
     public Projectile(int xVel, int yVel) {
         this.xVel = xVel;
