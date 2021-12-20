@@ -1,5 +1,7 @@
 package net.ddns.spellbank.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Point {
@@ -36,5 +38,15 @@ public class Point {
 	
 	public int hashCode() {
 	    return Objects.hash(x, y);
+	}
+	
+	public List<Point> getNeighbors() {
+	    List<Point> neighbors = new ArrayList<>();
+	    for (int i = -1; i < 2; i++) {
+	        for (int j = -1; j < 2; j++) {
+	            neighbors.add(new Point(x + i, y + j));
+	        }
+	    }
+	    return neighbors;
 	}
 }
