@@ -87,7 +87,7 @@ public class Point3D {
             transforms[2] = transforms[1].rotateXY();
             transforms[3] = transforms[2].rotateXY();
         
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 5; i++) {
                 transforms[i * 4 + 4] = transforms[i].rotateXZ();
                 transforms[i * 4 + 5] = transforms[i * 4 + 4].rotateXY();
                 transforms[i * 4 + 6] = transforms[i * 4 + 5].rotateXY();
