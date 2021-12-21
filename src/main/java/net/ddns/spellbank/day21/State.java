@@ -35,11 +35,11 @@ public class State {
         if (rolls == 2) {
             if (turn) {
                 int pos = p1Pos + rollTotal + r;
-                if (pos > 10) pos -= 10;
+                while (pos > 10) pos -= 10;
                 return new State(pos, p1Score + pos, p2Pos, p2Score, !turn);
             }
             int pos = p2Pos + rollTotal + r;
-            if (pos > 10) pos -= 10;
+            while (pos > 10) pos -= 10;
             return new State(p1Pos, p1Score, pos, p2Score + pos, !turn);
         } else {
             return new State(p1Pos, p1Score, p2Pos, p2Score, turn, rolls + 1, rollTotal + r);
@@ -71,21 +71,13 @@ public class State {
         return 0;
     }
     
-    public int hashcode() {
+    public int hashCode() {
         return Objects.hash(p1Pos, p2Pos, p1Score, p2Score, turn, rolls, rollTotal);
     }
     
-    public static void main(String[] args) {
-        State s = new State(4, 0, 1, 0, true);
-        System.out.println(s.toString());
-        while (s.hasWon() == 0) {
-            s = s.nextState(2);
-            System.out.println(s.toString());
-        }
-        System.out.println(s.hasWon());
-    }
-    
     /*
+     * Could possibly optimize to remove intermediate rolls
+     * 
      * 111 = 3                         3 -> 1
      * 112 121 211 = 4                 4 -> 3
      * 113 131 311 = 5                 5 -> 6
