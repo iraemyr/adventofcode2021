@@ -104,9 +104,10 @@ public class Day19 {
                 Point3D t = new Point3D(p.x + loc.x, p.y + loc.y, p.z + loc.z);
                 if (!key.equals(t)) break;
                 count++;
+                if (count == 12) break;
             }
             
-            if (count >= 12) {
+            if (count == 12) {
                 for (Point3D p : scanner) {
                     Point3D tr =  p.transform(i);
                     Point3D t = new Point3D(tr.x + loc.x, tr.y + loc.y, tr.z + loc.z);
@@ -117,5 +118,4 @@ public class Day19 {
         }
         return null;
     }
-
 }

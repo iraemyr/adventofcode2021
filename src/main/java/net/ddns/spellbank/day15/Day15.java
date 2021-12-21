@@ -71,7 +71,7 @@ public class Day15 {
         }
         
         Path endPoint = pointToPath.get(new Point(grid.length - 1, grid[0].length - 1));
-        while (!unsettled.contains(endPoint)) {
+        while (!settled.contains(endPoint)) {
             Path pa = unsettled.poll();
             settled.add(pa);
             for (Point p : getNeighbors(grid, pa.at)) {
