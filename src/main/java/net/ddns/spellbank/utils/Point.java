@@ -40,6 +40,10 @@ public class Point {
 	    return Objects.hash(x, y);
 	}
 	
+	public static int manhattan(Point p, Point dest) {
+	    return Math.abs(p.x - dest.x) + Math.abs(p.y - dest.y);
+	}
+	
 	public List<Point> getNeighbors() {
 	    List<Point> neighbors = new ArrayList<>();
 	    for (int i = -1; i < 2; i++) {
