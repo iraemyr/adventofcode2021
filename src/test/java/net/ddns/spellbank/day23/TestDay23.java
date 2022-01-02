@@ -19,11 +19,11 @@ class TestDay23 {
     void part1() {
         String[] lines = InputFile.getLines("day23/input2");
         assertEquals(15109, Day23.part1(lines));
-    }
+    }*/
 
     @Test
     void part2() {
         String[] lines = InputFile.getLines("day23/input1");
         assertEquals(53751, Day23.part1(lines));
-    }*/
+    }
 }
