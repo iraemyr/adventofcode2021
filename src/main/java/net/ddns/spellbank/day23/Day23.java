@@ -22,17 +22,12 @@ public class Day23 {
     public static long part1(String[] lines) {
         char[][] map = loadMap(lines);
         State state = new State(map, 0);
-        //MyUtils.printMap(state.getMap());
         Queue<State> q = new PriorityQueue<>();
         Set<State> visited = new HashSet<>();
         q.add(state);
-        //int i = 0;
         while (!q.isEmpty()) {
-            //i++;
-            //if (i % 100 == 0) System.out.println(visited.size());
-        //for (int i = 0; i < 5; i++) {
             State s = q.poll();
-            //if (i % 100 == 0) System.out.println(s.cost);
+            if (visited.contains(s)) continue;
             visited.add(s);
             if (s.isDone()) return s.cost;
             var moves = s.getMoves();
@@ -50,7 +45,6 @@ public class Day23 {
                 map[i][j] = lines[i].charAt(j);
             }
         }
-        //MyUtils.printMap(map);
         return map;
     }
 

@@ -14,12 +14,11 @@ class TestDay23 {
         assertEquals(3223, Day23.part1(lines));
     }
     
-    // Disabled due to timeout
-    /*@Test
+    @Test
     void part1() {
         String[] lines = InputFile.getLines("day23/input2");
         assertEquals(15109, Day23.part1(lines));
-    }*/
+    }
 
     @Test
     void part2() {
