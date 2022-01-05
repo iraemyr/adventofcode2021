@@ -1,6 +1,7 @@
 package net.ddns.spellbank.day23;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import net.ddns.spellbank.utils.MyUtils;
 import net.ddns.spellbank.utils.Point;
 
 public class State implements Comparable<State>{
-    
+
     //private CharMap map;
     private char[][] map;
     long cost;
@@ -41,22 +42,23 @@ public class State implements Comparable<State>{
     private static final Point D1 = new Point(4, 9);
     private static final Point D2 = new Point(3, 9);
     private static final Point D3 = new Point(2, 9);
-    
+
     private static final long ACost = 1;
     private static final long BCost = 10;
     private static final long CCost = 100;
     private static final long DCost = 1000;
-    
+
     public boolean isEmpty(Point p, char[][] map) {
         return map[p.x][p.y] == '.';
     }
-    
+
     private static final Comparator<State> COST_COMPARATOR = Comparator.comparingLong(a -> a.cost);
 
+    @Override
     public int compareTo(State o) {
         return COST_COMPARATOR.compare(this, o);
     }
-    
+
     private static void init() {
         AHOME = new ArrayList<>();
         AHOME.add(A0); AHOME.add(A1); AHOME.add(A2); AHOME.add(A3);
@@ -75,7 +77,7 @@ public class State implements Comparable<State>{
         HALLS.add(Hall5);
         HALLS.add(Hall6);
     }
-    
+
     public boolean isDone() {
         //System.out.println("Checking Done");
         for (Point point : AHOME) if (map[point.x][point.y] != 'A') {
@@ -91,24 +93,27 @@ public class State implements Comparable<State>{
         //System.out.println("D OK");
         return true;
     }
-    
+
     public boolean inHall(Point p) {
         return p.x == 1;
     }
-    
-    public char[][] getMap() {
+
+    public char[][] getMapCopy() {
         char[][] copy = new char[map.length][map[0].length];
         for (int i = 0; i < map.length; i++)
             for (int j = 0; j < map[i].length; j++) copy[i][j] = map[i][j];
         return copy;
     }
-    
+    public char[][] getMap() {
+        return map;
+    }
+
     public State(char[][] m, long c) {
         if (AHOME == null) init();
         map = m;
         cost = c;
     }
-    
+
     public long getCost(Point p, Point dest) {
         long c = switch (p.c) {
         case 'A' -> ACost;
@@ -119,7 +124,7 @@ public class State implements Comparable<State>{
         };
         return Point.manhattan(p, dest) * c;
     }
-    
+
     public boolean canEnterHallway(Point p) {
         //System.out.println(p.toString());
         //System.out.println("isHome: " + isHome(p));
@@ -132,7 +137,7 @@ public class State implements Comparable<State>{
         //System.out.println("Can enter hallway");
         return true;
     }
-    
+
     public boolean isHome(Point p) {
         var home = switch(p.c) {
         case 'A' -> AHOME;
@@ -147,7 +152,7 @@ public class State implements Comparable<State>{
         }
         return false;
     }
-    
+
     private Point canEnterRoom(Point p) {
         var home = switch(p.c) {
         case 'A' -> AHOME;
@@ -170,7 +175,7 @@ public class State implements Comparable<State>{
         if (checkPath(p, d)) return d;
         return null;
     }
-    
+
     private boolean checkPath(Point p, Point d) {
         int deltay = p.y < d.y ? 1 : -1;
         int deltax = p.x < d.x ? 1 : -1;
@@ -199,12 +204,10 @@ public class State implements Comparable<State>{
                 if (map[x][y] != '.') return false;
             }
         }
-        
-        
         //System.out.println("Path ok");
         return true;
     }
-    
+
     public List<State> getMoves() {
         List<State> states = new ArrayList<>();
         for (int i = 0; i < map.length; i++) {
@@ -237,48 +240,32 @@ public class State implements Comparable<State>{
         }
         return states;
     }
-    
+
     private State getMove(Point p, Point dest, boolean debug) {
         if (p == null || dest == null) {
             System.out.println("ERROR");
             System.out.flush();
             return null;
         }
-        char[][] newMap = getMap();
+        char[][] newMap = getMapCopy();
         if (debug) MyUtils.printMap(newMap);
         newMap[p.x][p.y] = '.';
         newMap[dest.x][dest.y] = p.c;
         if (debug) MyUtils.printMap(newMap);
-        //System.out.println("New State");
-        //MyUtils.printMap(newMap);
-        //System.out.println();
         return new State(newMap, cost + getCost(p, dest));
     }
-    
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (this == obj) return true;
         if (!(obj instanceof State)) return false;
         State aState = (State) obj;
-        var src = getPoints();
-        var a = aState.getPoints();
-        for (int i = 0; i < src.size(); i++) 
-            if (!src.get(i).equals(a.get(i))) return false;
-        return true;
+        return Arrays.deepEquals(map, aState.getMap());
     }
-    
+
+    @Override
     public int hashCode() {
-        return getPoints().hashCode();
-    }
-    
-    private List<CharPoint> getPoints() {
-        List<CharPoint> points = new ArrayList<>();
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                char c = map[i][j];
-                if (Character.isUpperCase(c)) points.add(new CharPoint(i, j, c));
-            }
-        }
-        return points;
+        return Arrays.deepHashCode(map);
     }
 }

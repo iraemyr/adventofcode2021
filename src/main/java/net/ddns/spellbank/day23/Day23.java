@@ -13,7 +13,7 @@ public class Day23 {
         String file = "day23/input2";
         String[] lines = InputFile.getLines(file);
         System.out.println(part1(lines)); // 15109
-        
+
         file = "day23/input1";
         lines = InputFile.getLines(file);
         System.out.println(part1(lines)); // 53751
@@ -37,7 +37,7 @@ public class Day23 {
         }
         return 0;
     }
-    
+
     private static char[][] loadMap(String[] lines) {
         char[][] map = new char[lines.length][lines[0].length()];
         for (int i = 0; i < lines.length; i++) {

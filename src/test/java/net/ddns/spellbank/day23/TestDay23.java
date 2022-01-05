@@ -13,7 +13,7 @@ class TestDay23 {
         String[] lines = InputFile.getLines("day23/done");
         assertEquals(3223, Day23.part1(lines));
     }
-    
+
     @Test
     void part1() {
         String[] lines = InputFile.getLines("day23/input2");
